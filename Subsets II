@@ -1,0 +1,55 @@
+
+
+class Solution {
+
+private:
+
+    void helperFunction(
+                        vector<vector<int> > &results,
+                        vector<int> &subsets,
+                        const vector<int> &nums,
+                        int startNum)
+    {
+    
+        results.push_back(subsets);
+        
+        int i;
+        
+        //startNum = 0; 1; 2; 
+        for (i = startNum; i < nums.size(); i++)
+        {
+            if (i == startNum || nums[i] != nums[i-1])
+            {
+                subsets.push_back(nums[i]);//0->1, 1->2->[1,2]
+            
+                helperFunction(results, subsets, nums, i+1);
+            
+                subsets.pop_back();
+            }
+            
+            
+        }
+    
+                            
+    }
+
+public:
+
+    vector<vector<int> > subsetsWithDup( const vector<int> &S) {
+    	
+    	vector<vector<int> > results;
+    	
+    	vector<int> subset;
+    	
+    	//since constant type could not be sorted;
+      //therefore I copied S to a non-constant vector; then sort the numbers;
+    	vector<int> nums(S);
+    	
+    	sort(nums.begin(), nums.end());
+    	
+    	helperFunction(results, subset, nums, 0);
+    	
+    	return results;
+    	
+    }
+};
